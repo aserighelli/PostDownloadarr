@@ -15,8 +15,8 @@ elif 'RADARR_EVENTTYPE' in os.environ:
     content = 'MOVIE'
 else:
     prefix = 'MANUAL'
-if 'BJShare' in os.environ:
-    now = datetime.now().strftime('%Y%m%d_%H%M%S.%f')
+if 'BJShare' in os.environ or 'MANUAL' in prefix:
+    dt_string = datetime.now().strftime('%Y%m%d_%H%M%S.%f')
     event_type = str(os.environ.get('%sARR_EVENTTYPE' % prefix)).upper()
     if 'GRAB' in event_type:
         titulo = str(os.environ.get('%sARR_RELEASE_TITLE' % prefix)).replace(' ', '.')
