@@ -35,20 +35,16 @@ for (item, value) in os.environ.items():
 video = []
 for ext in ('*.mp4', '*.mkv'):
     video.extend(glob(join(path + '\\' + ext)))
-if len(video) > 0:
-    legendas = glob(path + '\\*.srt')
-    if len(legendas) > 0:
-        logfile.write('\nLegendas renomeadas:\n')
-        for item in legendas:
-            nomelegenda = os.path.basename(item)
-            nomelegenda = os.path.splitext(nomelegenda)
-            nomelegenda = nomelegenda[0]
-            idioma = os.path.splitext(nomelegenda)
-            if 'pt' not in idioma[1] and 'en' not in idioma[1]:
-                nomeantigo = item
-                nomenovo = str(path) + '\\' + nomelegenda + '.pt-BR.srt'
-                os.rename(r'%s' % nomeantigo, r'%s' % nomenovo)
-                logfile.write('%s -> %s\n' % (str(os.path.basename(nomeantigo)), str(os.path.basename(nomenovo))))
-    else:
-        logfile.write('\nSem legendas para renomear\n')
+legendas = glob(path + '\\*.srt')
+if len(legendas) > 0:
+    logfile.write('\nLegendas renomeadas:\n')
+    for item in legendas:
+        nomelegenda = os.path.splitext(os.path.basename(item))
+        idioma = os.path.splitext(nomelegenda[0])
+        if 'pt' not in idioma[1] and 'en' not in idioma[1]:
+            nomenovo = str(path) + '\\' + nomelegenda[0] + '.pt-BR.srt'
+            os.rename(r'%s' % item, r'%s' % nomenovo)
+            logfile.write('%s -> %s\n' % (str(os.path.basename(item)), str(os.path.basename(nomenovo))))
+else:
+    logfile.write('\nSem legendas para renomear\n')
 logfile.close()
